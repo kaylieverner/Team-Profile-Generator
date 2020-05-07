@@ -1,15 +1,4 @@
-// // TODO: Write code to define and export the Employee class
-// The first class is an `Employee` parent class with the following properties and
-// methods:
-
-//   * name
-//   * id
-//   * email
-//   * getName()
-//   * getId()
-//   * getEmail()
-//   * getRole() // Returns 'Employee'
-const inquirer = require("inquirer"); 
+//code to define and export the Employee class
 
 class Employee {
     constructor(name, id, email) {
@@ -19,33 +8,15 @@ class Employee {
     }
 
     getName(name) {
-        return this.name;
-        // inquirer.prompt([{
-        //     type: "input", 
-        //     name: "name", 
-        //     message: "Enter the employee's name."
-        // }])
-        // console.log(name);
+        return this.name; 
     }
 
     getId(id) {
         return this.id;
-        // inquirer.prompt([{
-        //     type: "input", 
-        //     name: "id", 
-        //     message: "Enter the employee's id."
-        // }])
-        // console.log(id);
     }
 
     getEmail(email) {
         return this.email;
-        // inquirer.prompt([{
-        //     type: "input", 
-        //     name: "email", 
-        //     message: "Enter the employee's email."
-        // }])
-        // console.log(email);
     }
 
     getRole() {
