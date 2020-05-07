@@ -136,7 +136,13 @@ async function decideToAddProfile() {
     }
 };
 
+async function addEngineer() {
 
+}
+
+async function addInter() {
+    
+}
 
 function collectRoleType(addEmployees) {
     if (addEmployees == true) {
