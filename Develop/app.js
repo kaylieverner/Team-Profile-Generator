@@ -117,18 +117,17 @@ async function getMgrInfo() {
     catch (err) {
     console.log(err)
     }
-    decideToAddProfile();
+    await decideToAddProfile();
 };
 
 async function decideToAddProfile() {
     try {
-        await inquirer.prompt(addTeamMemberQuestion).then(function askRole(answers) {
+        await inquirer.prompt(addTeamMemberQuestion).then(function useResponse(answers) {
             if (answers.addEmployee) {
-                inquirer.prompt(roleQuestion);
-                addEngineerorIntern();
+                inquirer.prompt(roleQuestion).then(addEngineerorIntern(answers))
             }
             if (answers.addEmployee == false) {
-                render();
+                render; // stop questions and create html page
             }
         })
     } 
@@ -140,10 +139,20 @@ async function decideToAddProfile() {
 async function addEngineerorIntern(answers) {
     try {
         if (answers.role == "Engineer") {
-            await inquirer.prompt(engineerQuestion).then(decideToAddProfile());
+            inquirer.prompt(engineerQuestion).then(function createEng (answers) {
+                const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                console.log(engineer); 
+                console.log("Generated engineer object successfully!")
+                decideToAddProfile();
+            });
         }
         if (answers.role == "Intern") {
-            await inquirer.prompt(engineerQuestion).then(decideToAddProfile());
+            inquirer.prompt(internQuestion).then(function createIntern (answers) {
+                const intern = new Intern(answers.name, answers.id, answers.email, answers.school); 
+                console.log(intern); 
+                console.log("Generated intern object successfully!")
+                decideToAddProfile();
+            });
         }
     }
     catch (err) {
