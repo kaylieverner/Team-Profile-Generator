@@ -125,6 +125,7 @@ async function decideToAddProfile() {
         await inquirer.prompt(addTeamMemberQuestion).then(function askRole(answers) {
             if (answers.addEmployee) {
                 inquirer.prompt(roleQuestion);
+                addEngineerorIntern();
             }
             if (answers.addEmployee == false) {
                 render();
@@ -136,38 +137,19 @@ async function decideToAddProfile() {
     }
 };
 
-async function addEngineer() {
-
-}
-
-async function addInter() {
-    
-}
-
-function collectRoleType(addEmployees) {
-    if (addEmployees == true) {
-        inquirer.prompt([
-            {
-                type: "list", 
-                name: "role", 
-                message: "Choose the employee's role type.",
-                choices: ["Engineer", "Intern"]
-            }
-        ]) 
+async function addEngineerorIntern(answers) {
+    try {
+        if (answers.role == "Engineer") {
+            await inquirer.prompt(engineerQuestion).then(decideToAddProfile());
+        }
+        if (answers.role == "Intern") {
+            await inquirer.prompt(engineerQuestion).then(decideToAddProfile());
+        }
     }
-    else {
-       //stop prompts and create HTML file  
+    catch (err) {
+        console.log(err);
     }
 }; 
-
-function collectEngineerInfo() {
-}; 
-
-function collectInternInfo() {
-}; 
-
-
-
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
@@ -182,27 +164,6 @@ function collectInternInfo() {
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
-
-// const employeeQuestions =
-// [
-//     {
-//         type: "input", 
-//         name: "name", 
-//         message: "Enter the employee's name."
-//     }, 
-//     {
-//         type: "input", 
-//         name: "id", 
-//         message: "Enter the employee's ID."
-//     }, 
-//     {
-//         type: "input", 
-//         name: "email", 
-//         message: "Enter the employee's email."
-//     }
-// ]; 
-
-
 
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
