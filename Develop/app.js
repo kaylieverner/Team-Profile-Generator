@@ -1,9 +1,11 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -124,41 +126,39 @@ async function decideToAddProfile() {
     try {
         await inquirer.prompt(addTeamMemberQuestion).then(function useResponse(answers) {
             if (answers.addEmployee) {
-                inquirer.prompt(roleQuestion).then(addEngineerorIntern(answers))
+                return inquirer.prompt(roleQuestion).then(async function addEngineerorIntern(answers) {
+                    try {
+                        if (answers.role == "Engineer") {
+                            inquirer.prompt(engineerQuestion).then(function createEng (answers) {
+                                const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                                console.log(engineer); 
+                                console.log("Generated engineer object successfully!")
+                                decideToAddProfile();
+                            });
+                        }
+                        if (answers.role == "Intern") {
+                            inquirer.prompt(internQuestion).then(function createIntern (answers) {
+                                const intern = new Intern(answers.name, answers.id, answers.email, answers.school); 
+                                console.log(intern); 
+                                console.log("Generated intern object successfully!")
+                                decideToAddProfile();
+                            });
+                        }
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                }); 
             }
             if (answers.addEmployee == false) {
-                render; // stop questions and create html page
+                render(Manager); // stop questions and create html page
             }
         })
     } 
     catch (err) {
         console.log(err);
-    }
+    } 
 };
-
-async function addEngineerorIntern(answers) {
-    try {
-        if (answers.role == "Engineer") {
-            inquirer.prompt(engineerQuestion).then(function createEng (answers) {
-                const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-                console.log(engineer); 
-                console.log("Generated engineer object successfully!")
-                decideToAddProfile();
-            });
-        }
-        if (answers.role == "Intern") {
-            inquirer.prompt(internQuestion).then(function createIntern (answers) {
-                const intern = new Intern(answers.name, answers.id, answers.email, answers.school); 
-                console.log(intern); 
-                console.log("Generated intern object successfully!")
-                decideToAddProfile();
-            });
-        }
-    }
-    catch (err) {
-        console.log(err);
-    }
-}; 
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
