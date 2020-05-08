@@ -11,6 +11,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = []; 
+
 const mgrQuestion = 
 [
     {
@@ -112,7 +114,8 @@ async function getMgrInfo() {
     try {
         await inquirer.prompt(mgrQuestion).then(function createMgr (answers) {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber); 
-            console.log(manager); 
+            employees.push(manager); 
+            console.log(employees); 
             console.log("Generated manager object successfully!");  
         })
     }
@@ -131,7 +134,8 @@ async function decideToAddProfile() {
                         if (answers.role == "Engineer") {
                             inquirer.prompt(engineerQuestion).then(function createEng (answers) {
                                 const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-                                console.log(engineer); 
+                                employees.push(engineer); 
+                                console.log(employees); 
                                 console.log("Generated engineer object successfully!")
                                 decideToAddProfile();
                             });
@@ -139,7 +143,8 @@ async function decideToAddProfile() {
                         if (answers.role == "Intern") {
                             inquirer.prompt(internQuestion).then(function createIntern (answers) {
                                 const intern = new Intern(answers.name, answers.id, answers.email, answers.school); 
-                                console.log(intern); 
+                                employees.push(intern); 
+                                console.log(employees); 
                                 console.log("Generated intern object successfully!")
                                 decideToAddProfile();
                             });
@@ -151,7 +156,8 @@ async function decideToAddProfile() {
                 }); 
             }
             if (answers.addEmployee == false) {
-                render(Manager); // stop questions and create html page
+                render(employees); 
+                console.log("Rendering employees array.")
             }
         })
     } 
@@ -160,6 +166,10 @@ async function decideToAddProfile() {
     } 
 };
 
+async function createHTMLFile() {
+    
+}
+    outputPath
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
