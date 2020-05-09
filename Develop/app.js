@@ -157,7 +157,8 @@ async function decideToAddProfile() {
             }
             if (answers.addEmployee == false) {
                 render(employees); 
-                console.log("Rendering employees array.")
+                console.log("Rendering employees array."); 
+                return createHTMLFile(); 
             }
         })
     } 
@@ -167,9 +168,15 @@ async function decideToAddProfile() {
 };
 
 async function createHTMLFile() {
-    
-}
-    outputPath
+    fs.writeFile(outputPath, render(employees), function(err) {
+
+        if (err) {
+          return console.log(err);
+        }
+      
+        console.log("Success!");
+      });
+}; 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
