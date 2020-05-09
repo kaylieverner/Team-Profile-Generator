@@ -13,27 +13,57 @@ const render = require("./lib/htmlRenderer");
 
 const employees = []; 
 
+//functions to validate inputs of inquirer.prompt inputs
+function validateName(name){
+    return name !== '';
+}; 
+
+function validateID(id){
+    return id !== ''; 
+}; 
+
+function validateEmail(email) {
+    return email !== ''; 
+};
+
+function validateOfficeNum(officeNumber) {
+    var reg = /^\d+$/;
+    return reg.test(officeNumber) || "Office number should be a number.";
+};
+
+function validateGithub(github) {
+    return github !== '';
+};
+
+function validateSchool(school) {
+    return school !== ''; 
+};
+
 const mgrQuestion = 
 [
     {
         type: "input", 
         name: "name", 
-        message: "Enter the employee's name."
+        message: "Enter the employee's name.",
+        validate: validateName
     }, 
     {
         type: "input", 
         name: "id", 
-        message: "Enter the employee's ID."
+        message: "Enter the employee's ID.",
+        validate: validateID 
     }, 
     {
         type: "input", 
         name: "email", 
-        message: "Enter the employee's email."
+        message: "Enter the employee's email.", 
+        validate: validateEmail
     },
     {
         type: "input", 
         name: "officeNumber", 
-        message: "Enter the manager's office number."
+        message: "Enter the manager's office number.", 
+        validate: validateOfficeNum
     }
 ];
 
@@ -42,22 +72,26 @@ const engineerQuestion =
     {
         type: "input", 
         name: "name", 
-        message: "Enter the employee's name."
+        message: "Enter the employee's name.",
+        validate: validateName
     }, 
     {
         type: "input", 
         name: "id", 
-        message: "Enter the employee's ID."
+        message: "Enter the employee's ID.", 
+        validate: validateID
     }, 
     {
         type: "input", 
         name: "email", 
-        message: "Enter the employee's email."
+        message: "Enter the employee's email.", 
+        validate: validateEmail
     },
     {
         type: "input", 
         name: "github", 
-        message: "Enter the engineer's GitHub username."
+        message: "Enter the engineer's GitHub username.", 
+        validate: validateGithub
     }
 ]; 
 
@@ -66,22 +100,26 @@ const internQuestion =
     {
         type: "input", 
         name: "name", 
-        message: "Enter the employee's name."
+        message: "Enter the employee's name.", 
+        validate: validateName
     }, 
     {
         type: "input", 
         name: "id", 
-        message: "Enter the employee's ID."
+        message: "Enter the employee's ID.", 
+        validate: validateID
     }, 
     {
         type: "input", 
         name: "email", 
-        message: "Enter the employee's email."
+        message: "Enter the employee's email.", 
+        validate: validateEmail
     },
     {
         type: "input", 
         name: "school", 
-        message: "Enter the intern's school name."
+        message: "Enter the intern's school name.", 
+        validate: validateSchool
     }
 ]; 
 
